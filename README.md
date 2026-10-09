@@ -1,3 +1,4 @@
+
 # Signal Clone — Full-stack messaging
 
 An original implementation of the Signal messaging experience for the Scaler AI Labs SDE assignment. Next.js and TypeScript on the frontend; FastAPI, SQLite and authenticated WebSockets on the backend.
@@ -223,3 +224,6 @@ Commit the npm lockfile. Do not commit local databases, sessions, uploaded priva
 Visual references only: [Signal message UI](https://signal.org/blog/message-requests/), [Signal desktop navigation](https://signal.org/blog/call-links/), [Signal appearance settings](https://support.signal.org/hc/en-us/articles/360007320951-Chat-Colors-Wallpaper-and-Themes). Framework references: [FastAPI WebSockets](https://fastapi.tiangolo.com/advanced/websockets/), [Next.js output](https://nextjs.org/docs/app/api-reference/config/next-config-js/output).
 
 No existing Signal-clone repository was copied. Icons are from Lucide; the rest of the implementation and demo content were authored for this assignment with AI assistance. Signal and its branding belong to their respective owners. Understand, review and personalize the code before presenting it as your submission.
+
+# signal-clone
+76238172303c3adf513a1a74dafc7aa43490114f
