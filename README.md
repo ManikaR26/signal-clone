@@ -29,7 +29,7 @@ All seeded accounts use the fixed OTP **123456**.
 
 Use Alex in one browser window and Maya in an incognito window to demonstrate real-time messaging, typing indicators, delivery receipts, and read receipts.
 
-## Suggested demo flow
+## Suggested Demo-Flow
 
 1. Sign in as Alex with OTP `123456`.
 2. Open a second browser or incognito window and sign in as Maya.
