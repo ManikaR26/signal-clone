@@ -1,7 +1,8 @@
 # Verification report
 
-Status: automated and production-like local verification complete; browser,
-container, and hosted deployment checks remain pending.
+Status: automated and production-like local verification complete. The hosted
+root URL and health endpoint are live; the final two-browser hosted workflow
+and visual review still require manual checking.
 
 Date: 2026-10-09
 
@@ -50,7 +51,7 @@ Date: 2026-10-09
   preview is not reachable from the remote browser used for this session, so this
   must be performed locally before submission.
 - Docker build and persistent-volume restart test.
-- Public deployment and WebSocket verification.
+- Full two-browser messaging and WebSocket verification on the public URL.
 
 ## Reproduction commands
 
@@ -78,7 +79,7 @@ and a WebSocket `connected`/`pong` exchange. The login session and new message
 were both still available after the first process was stopped and the second
 process started.
 
-This is evidence for the application topology, not proof of a hosted
-deployment. The Docker image, persistent container volume, public HTTPS URL,
-and independent-browser checks still require a Docker-capable or hosted
-environment.
+This is evidence for the application topology. The public HTTPS root URL and
+health endpoint are now live. The free Render deployment does not provide a
+persistent disk, so restart persistence for custom records is not claimed.
+The independent-browser hosted workflow still requires a final manual check.

@@ -1,4 +1,4 @@
-# Start here, Manika
+# Start here
 
 This folder contains the full project. Keep `frontend/` and `backend/` together.
 
@@ -32,11 +32,12 @@ Open **http://localhost:3000**. Keep the Python backend on port 8000. Source cha
 ## Before submitting
 
 1. Read `docs/REQUIREMENTS.md` and try the workflows.
-2. Read `docs/EXPLAIN_THE_CODE.md`; understand the design and trace a message through the source.
-3. Create a **public** GitHub repository and upload the project source, including both required folders. The README explains the Git commands. Do not upload `node_modules/`, `.venv/`, `.next/`, local databases, or `.env` files.
-4. Follow `docs/DEPLOYMENT.md` to deploy the complete app with persistent SQLite storage. A static frontend-only deployment is insufficient.
+2. Review the source and documentation; trace one message from the frontend through the REST API, SQLite, and WebSocket hub.
+3. Keep the public GitHub repository limited to project source and submission documentation. Do not upload `node_modules/`, `.venv/`, `.next/`, local databases, or `.env` files.
+4. Follow `docs/DEPLOYMENT.md` to deploy the complete app. The current free Render demo uses ephemeral SQLite storage; a paid persistent volume is optional for production, not required for this assignment demo.
 5. Test the public URL in two separate browser sessions, then submit that URL and the GitHub repository URL using the email specified by the recruiter.
 
-**Publication status:** This package does not create your GitHub repository or hosting account. Those two external deliverables must be completed before submission.
+**Current links:** Public repository: https://github.com/ManikaR26/signal-clone
+Hosted demo: https://signal-clone-g5ln.onrender.com
 
 **Mocked by design:** OTP `123456`, encryption, calls, stories and linked devices. Real messaging, storage, groups, permissions, typing and receipts are implemented. Anyone can sign in as a demo user using the fixed OTP, so use only fictional demo content.

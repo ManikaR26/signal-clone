@@ -5,16 +5,12 @@ services:
     plan: free
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
-
     envVars:
       - key: DATA_DIR
         value: /app/data
-
       - key: FRONTEND_DIST
         value: /app/frontend/out
-
       - key: SEED_DEMO
         value: "1"
-
       - key: DEMO_OTP
         value: "123456"

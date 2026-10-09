@@ -1,6 +1,6 @@
 # Assignment requirement checklist
 
-This maps the supplied “Secure Messaging Platform (Signal Clone)” PDF to the implementation. Checked source features are implemented; publication tasks remain explicitly unchecked until actual external URLs exist. See `QA_REPORT.md` for executed tests and [`FINAL_AUDIT.md`](FINAL_AUDIT.md) for the requirement-by-requirement implementation, test path and file location.
+This maps the supplied â€œSecure Messaging Platform (Signal Clone)â€ PDF to the implementation. Checked source features are implemented. The public repository and hosted URL are now available; the final two-browser hosted workflow remains a manual submission check. See `QA_REPORT.md` for executed tests and [`FINAL_AUDIT.md`](FINAL_AUDIT.md) for the requirement-by-requirement implementation, test path and file location.
 
 ## Required stack
 
@@ -91,9 +91,9 @@ Disappearing timers intentionally begin at send time; this differs from Signal's
 - [x] Source code organized as `frontend/` and `backend/`.
 - [x] Buildable project and included prebuilt frontend in the downloadable ZIP; Docker image build remains pending on a Docker-capable host.
 - [x] Dockerfile, Compose setup and Render deployment blueprint.
-- [ ] **Public GitHub repository:** needs publication through the candidate's GitHub account.
-- [ ] **Hosted working URL:** needs deployment to a Python/WebSocket host with persistent storage.
-- [ ] **Public deployment verification:** independent browser messaging and restart-persistence check on the actual host.
+- [x] **Public GitHub repository:** https://github.com/ManikaR26/signal-clone
+- [x] **Hosted working URL:** https://signal-clone-g5ln.onrender.com
+- [ ] **Public deployment verification:** complete the independent-browser messaging check on the actual host; the root and `/api/health` endpoints are live.
 - [ ] **Submission form:** submit both final URLs with the recruiter's required email.
 
-Do not mark the last four items complete merely because local tests pass or deployment configuration exists.
+Do not mark the remaining browser and submission items complete without performing them.

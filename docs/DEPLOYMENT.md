@@ -2,7 +2,7 @@
 
 ## Recommended topology
 
-One Docker web service serves the exported Next.js UI, the FastAPI REST API and WebSocket endpoint. A persistent volume stores SQLite and uploads. Use one service instance and one Python worker.
+One Docker web service serves the exported Next.js UI, the FastAPI REST API and WebSocket endpoint. Use one service instance and one Python worker. A persistent volume is useful for a production deployment, but the current Render demo intentionally uses the free plan without a persistent disk.
 
 This avoids deploying a frontend that looks functional but cannot talk to a live Python backend. Vercel/Netlify may serve the frontend separately, but the Python/WebSocket backend still needs a compatible host and persistent disk.
 
@@ -10,24 +10,24 @@ This avoids deploying a frontend that looks functional but cannot talk to a live
 
 1. Push the project to a **public GitHub repository**, keeping `Dockerfile`, `render.yaml`, `frontend/` and `backend/` at the root.
 2. Sign in to Render and choose to create a new Blueprint from that repository.
-3. Review `render.yaml`. It specifies a **Starter paid web service and 1 GB persistent disk**. Review the cost shown by Render before confirming; no resources have already been purchased or created.
+3. Review `render.yaml`. It specifies a **free web service without a persistent disk**, so no paid Render resource is required for the assignment demo.
 4. Deploy. Render builds the Next.js frontend, installs the Python dependencies and starts the application using the Dockerfile.
 5. Wait for the deployment to pass `/api/health` and open the assigned public HTTPS URL.
-6. Open it in an independent browser/private window, sign in as a different user and check live messaging.
-7. Restart the service and verify that a newly created conversation/message remains. This checks that `DATA_DIR` really points to the mounted disk.
+6. Open it in two independent browser sessions, sign in as different demo users, and check live messaging.
+7. Remember that custom SQLite records and uploaded files may reset when the free service restarts or redeploys. Seeded demo data is recreated automatically.
 
 Environment:
 
 | Variable | Value in the supplied deployment |
 | --- | --- |
-| `DATA_DIR` | `/var/data/signal` |
+| `DATA_DIR` | `/app/data` |
 | `FRONTEND_DIST` | `/app/frontend/out` |
 | `SEED_DEMO` | `1` |
 | `DEMO_OTP` | `123456` |
 | `PORT` | Supplied by the host; Dockerfile respects it |
 | `NEXT_PUBLIC_API_URL` | Leave unset for same-origin deployment |
 
-Do not use ephemeral local storage for the final demo: SQLite data can disappear across restarts or deploys. Render persistent disks require a supported paid service. If using another host, provide an equivalent persistent volume; do not change the required database to an unrelated hosted service just to fit a free tier.
+The current free Render demo uses ephemeral local storage. This is acceptable for an assignment demonstration, but it means custom messages and uploaded files are not guaranteed to survive a restart or redeploy. A production deployment should use an equivalent persistent volume; do not change the required database to an unrelated hosted service just to fit a free tier.
 
 ## Production-like local verification
 
@@ -44,8 +44,8 @@ container and verify the complete path locally:
    still available.
 
 This smoke check passed locally on 2026-10-09 using a clean SQLite directory.
-It does not replace the Docker volume restart check or a real hosted HTTPS and
-WebSocket check.
+The hosted root URL and `/api/health` endpoint were also verified on
+2026-10-09. This does not replace a full two-browser hosted WebSocket check.
 
 ## Docker-capable alternative
 
@@ -87,10 +87,13 @@ For a separately hosted static frontend:
 - Hosted HTTPS URL opens independently of the development computer.
 - Demo users exist, and both direct and group messages work between independent sessions.
 - Backend health and API docs load.
-- Newly created records survive a service restart.
+- The hosted root and `/api/health` endpoints respond successfully.
+- If persistent storage is configured, newly created records survive a service restart.
 - README and requirement checklist are present in the repository.
 - Submit both actual URLs through the recruiter's form, using the required email address.
 
 Reference documentation: [Render Docker](https://render.com/docs/docker), [persistent disks](https://render.com/docs/disks), [Blueprint specification](https://render.com/docs/blueprint-spec).
 
-**Status:** Deployment configuration is provided. Public hosting and GitHub publication have not been performed from this environment.
+**Status:** The public repository and Render demo are available. The live root
+URL and `/api/health` endpoint were verified on 2026-10-09. Complete the
+two-browser hosted workflow check before submitting.
