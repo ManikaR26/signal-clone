@@ -44,8 +44,6 @@ real-time messaging, typing indicators, delivery receipts, and read receipts.
         src="docs/screenshots/interface.png"
         alt="Messenger interface"
         width="300"
-        height="190"
-        style="object-fit: contain; background: #f5f6f8; border-radius: 8px;"
       >
     </td>
     <td align="center" valign="top" width="50%">
@@ -54,8 +52,6 @@ real-time messaging, typing indicators, delivery receipts, and read receipts.
         src="docs/screenshots/realtime-chat.png"
         alt="Real-time messaging"
         width="300"
-        height="190"
-        style="object-fit: contain; background: #f5f6f8; border-radius: 8px;"
       >
     </td>
   </tr>
@@ -66,8 +62,6 @@ real-time messaging, typing indicators, delivery receipts, and read receipts.
         src="docs/screenshots/group-chat.png"
         alt="Group chat and admin controls"
         width="300"
-        height="190"
-        style="object-fit: contain; background: #f5f6f8; border-radius: 8px;"
       >
     </td>
     <td align="center" valign="top" width="50%">
@@ -76,8 +70,6 @@ real-time messaging, typing indicators, delivery receipts, and read receipts.
         src="docs/screenshots/dark-mode-settings.png"
         alt="Dark mode and settings"
         width="300"
-        height="190"
-        style="object-fit: contain; background: #f5f6f8; border-radius: 8px;"
       >
     </td>
   </tr>
