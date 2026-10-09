@@ -38,22 +38,21 @@ real-time messaging, typing indicators, delivery receipts, and read receipts.
 
 ## Screenshots
 
-### Messenger interface
+### Messenger Interface
 
-![Messenger interface](screenshots/01-messenger-interface.png)
+![Messenger interface](docs/screenshots/interface.png)
 
-### Real-time messaging
+### Real-Time Messaging
 
-![Real-time messaging](screenshots/02-realtime-messaging.png)
+![Real-time messaging](docs/screenshots/realtime-chat.png)
 
-### Group chat and admin controls
+### Group Chat and Admin Controls
 
-![Group chat and admin controls](screenshots/03-group-chat.png)
+![Group chat and admin controls](docs/screenshots/group-chat.png)
 
-### Dark mode and settings
+### Dark Mode and Settings
 
-![Dark mode and settings](screenshots/04-dark-mode.png)
-
+![Dark mode and settings](docs/screenshots/dark-mode-settings.png)
 ## Evaluation demo flow
 
 1. Sign in as Alex with OTP `123456`.
@@ -399,15 +398,7 @@ troubleshooting notes.
 - The UI is an original Signal-inspired recreation, not a claim of
   pixel-perfect parity with every Signal release.
 
-## Submission checklist
 
-- [x] Public GitHub repository
-- [x] Hosted HTTPS demo
-- [x] Frontend and backend included in the same repository
-- [x] README with setup, architecture, schema, API overview, and limitations
-- [x] Seed data and demo credentials documented
-- [ ] Complete two-browser live workflow test before submission
-- [ ] Submit both URLs through the assignment form
 
 ## Originality and attribution
 
