@@ -13,10 +13,9 @@ and real-time updates through authenticated WebSockets.
 > for sensitive conversations.
 
 ## Links
-
-- **Live demo:** [Open the deployed app](https://signal-clone-g5ln.onrender.com)
-- **GitHub repository:** [View the source code](https://github.com/ManikaR26/signal-clone)
-- **API documentation:** [Open Swagger docs](https://signal-clone-g5ln.onrender.com/docs)
+- **Live demo:** https://signal-clone-g5ln.onrender.com
+- **GitHub repository:** https://github.com/ManikaR26/signal-clone
+- **API documentation:** https://signal-clone-g5ln.onrender.com/docs
 
 The free Render service may take a few seconds to wake after inactivity.
 
