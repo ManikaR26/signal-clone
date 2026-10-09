@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { X, Users, MessageCircle } from "lucide-react";
+import { X, Users } from "lucide-react";
 export function Avatar({
   name,
   color = "blue",
@@ -34,8 +34,23 @@ export function Avatar({
 }
 export function SignalMark({ size = 42 }: { size?: number }) {
   return (
-    <span className="signal-mark" style={{ width: size, height: size }}>
-      <MessageCircle size={size * 0.6} fill="currentColor" strokeWidth={1.5} />
+    <span
+      className="signal-mark"
+      style={{ width: size, height: size }}
+      aria-label="Signal logo"
+      role="img"
+    >
+      <svg
+        viewBox="0 0 48 48"
+        width={size * 0.64}
+        height={size * 0.64}
+        aria-hidden="true"
+      >
+        <path
+          d="M24 5C13.5 5 5 12.5 5 22c0 5.7 3 10.8 7.7 13.9L10.5 42l7.1-3.3c2 .8 4.1 1.3 6.4 1.3 10.5 0 19-7.5 19-18S34.5 5 24 5Z"
+          fill="currentColor"
+        />
+      </svg>
     </span>
   );
 }

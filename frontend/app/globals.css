@@ -225,24 +225,38 @@ small {
   color: #438888;
 }
 .signal-mark {
-  background: #3a76f0;
+  background: #2f6fed;
   color: white;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 29%;
+  border-radius: 50% 50% 50% 15%;
   position: relative;
   flex-shrink: 0;
+  box-shadow: 0 6px 18px #2f6fed28;
 }
 .signal-mark:before {
   content: "";
   position: absolute;
-  inset: 15%;
-  border: 1.7px dashed white;
-  border-radius: 50%;
+  inset: 13%;
+  border: 2px dashed rgba(255, 255, 255, 0.92);
+  border-radius: 50% 50% 50% 42%;
+  transform: rotate(-8deg);
+}
+.signal-mark:after {
+  content: "";
+  position: absolute;
+  left: 17%;
+  bottom: 5%;
+  width: 22%;
+  height: 22%;
+  background: #2f6fed;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 .signal-mark svg {
   position: relative;
+  z-index: 1;
+  transform: translateY(-1%);
 }
 .spin {
   animation: spin 1s linear infinite;
@@ -362,6 +376,11 @@ small {
   font-size: 26px;
   letter-spacing: -0.7px;
   font-weight: 700;
+}
+.sidebar-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
 }
 .sidebar-search {
   padding: 9px 19px 0;
@@ -962,6 +981,15 @@ small {
 }
 .composer-input .icon-button {
   color: var(--muted);
+  flex-shrink: 0;
+}
+.composer > .icon-button {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.composer > .icon-button:hover {
+  color: var(--text);
+  background: var(--hover);
 }
 .send-button {
   width: 42px;
@@ -1051,22 +1079,36 @@ small {
   align-items: center;
   justify-content: center;
   text-align: center;
-  gap: 20px;
+  gap: 14px;
   background: var(--bg);
 }
 .empty-chat .signal-mark {
-  margin-top: -40px;
+  margin-top: -30px;
   opacity: 0.9;
 }
 .empty-chat h1 {
-  font-size: 27px;
+  font-size: 26px;
   letter-spacing: -0.7px;
-  margin-top: 9px;
+  margin-top: 8px;
   font-weight: 600;
 }
 .empty-chat p {
   font-size: 14px;
   color: var(--muted);
+}
+.empty-chat p a {
+  color: var(--blue);
+  text-decoration: none;
+}
+.empty-chat p a:hover {
+  text-decoration: underline;
+}
+.welcome-link {
+  color: var(--blue);
+  cursor: pointer;
+}
+.welcome-link:hover {
+  text-decoration: underline;
 }
 .empty-shortcut {
   font-size: 12px;

@@ -10,6 +10,7 @@ import {
   Bookmark,
   X,
   Check,
+  MoreVertical,
 } from "lucide-react";
 import { User, chatName, chatAvatar } from "@/lib/types";
 import { useMessenger } from "@/lib/useMessenger";
@@ -158,9 +159,17 @@ export default function Messenger({
                 ? "Calls"
                 : "Stories"}
           </h1>
-          <IconButton label="New message" onClick={() => setDialog("new")}>
-            <SquarePen size={21} />
-          </IconButton>
+          <div className="sidebar-header-actions">
+            <IconButton label="New chat" onClick={() => setDialog("new")}>
+              <SquarePen size={21} />
+            </IconButton>
+            <IconButton
+              label="Chat options"
+              onClick={() => m.notify("Chat options are coming soon")}
+            >
+              <MoreVertical size={21} />
+            </IconButton>
+          </div>
         </header>
         {sideTab === "chats" ? (
           <>
@@ -340,17 +349,14 @@ export default function Messenger({
             )}
             <h2>
               {sideTab === "calls"
-                ? "Stay in the conversation"
-                : "Share a little of your day"}
+                ? "No calls"
+                : "No stories"}
             </h2>
             <p>
               {sideTab === "calls"
-                ? "Voice and video calls are coming soon."
-                : "Stories are coming soon."}
+                ? "Recent calls will appear here."
+                : "New stories will appear here."}
             </p>
-            <button className="secondary" onClick={() => setSideTab("chats")}>
-              Back to chats
-            </button>
           </div>
         )}
       </aside>

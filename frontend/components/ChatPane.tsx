@@ -9,6 +9,7 @@ import {
   Smile,
   Plus,
   Send,
+  Mic,
   Check,
   CheckCheck,
   Clock,
@@ -244,8 +245,10 @@ export default function ChatPane({
     return (
       <section className="chat-pane empty-chat">
         <SignalMark size={100} />
-        <h1>Keep your people close.</h1>
-        <p>Select a conversation or start a new one.</p>
+        <h1>Welcome to Signal</h1>
+        <p>
+          See <span className="welcome-link">what&apos;s new</span> in this update
+        </p>
         <span className="empty-shortcut">
           <kbd>Alt</kbd> + <kbd>N</kbd> New message
         </span>
@@ -619,19 +622,14 @@ export default function ChatPane({
           </div>
         )}
         <div className="composer">
-          <IconButton
-            label="Attach a file"
-            onClick={() => fileInput.current?.click()}
-          >
-            <Plus size={24} />
-          </IconButton>
-          <input
-            type="file"
-            ref={fileInput}
-            hidden
-            onChange={(e) => void upload(e.target.files?.[0])}
-          />
           <div className="composer-input">
+            <IconButton
+              label="Choose emoji"
+              active={emoji}
+              onClick={() => setEmoji((v) => !v)}
+            >
+              <Smile size={21} />
+            </IconButton>
             <textarea
               ref={input}
               rows={1}
@@ -657,22 +655,36 @@ export default function ChatPane({
                 }
               }}
             />
-            <IconButton
-              label="Choose emoji"
-              active={emoji}
-              onClick={() => setEmoji((v) => !v)}
-            >
-              <Smile size={22} />
-            </IconButton>
           </div>
-          <button
-            className="send-button"
-            aria-label="Send message"
-            disabled={(!text.trim() && !attachment) || uploading}
-            onClick={submit}
+          {text.trim() || attachment ? (
+            <button
+              className="send-button"
+              aria-label="Send message"
+              disabled={uploading}
+              onClick={submit}
+            >
+              <Send size={20} />
+            </button>
+          ) : (
+            <IconButton
+              label="Record voice message"
+              onClick={() => notify("Voice messages are coming soon")}
+            >
+              <Mic size={21} />
+            </IconButton>
+          )}
+          <IconButton
+            label="Attach a file"
+            onClick={() => fileInput.current?.click()}
           >
-            <Send size={20} />
-          </button>
+            <Plus size={23} />
+          </IconButton>
+          <input
+            type="file"
+            ref={fileInput}
+            hidden
+            onChange={(e) => void upload(e.target.files?.[0])}
+          />
         </div>
         <div className="composer-hint">
           Enter to send <span>·</span> Shift + Enter for a new line

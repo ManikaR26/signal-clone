@@ -2,6 +2,8 @@
 import { useEffect, useState } from "react";
 import {
   Search,
+  MessageCircle,
+  Phone,
   Users,
   UserPlus,
   Check,
@@ -14,6 +16,11 @@ import {
   Camera,
   Timer,
   LockKeyhole,
+  UserRound,
+  Heart,
+  Settings2,
+  Database,
+  HardDriveDownload,
 } from "lucide-react";
 import { api } from "@/lib/api";
 import { User, Conversation, chatName, chatAvatar } from "@/lib/types";
@@ -97,8 +104,8 @@ export function NewChat({
         mode === "group"
           ? "New group"
           : mode === "add"
-            ? "Add a contact"
-            : "New message"
+            ? "Find a contact"
+            : "New chat"
       }
       onClose={onClose}
     >
@@ -121,7 +128,7 @@ export function NewChat({
               <span className="round-icon">
                 <UserPlus size={20} />
               </span>
-              Add a contact
+              Find by username or phone number
               <ChevronRight size={18} />
             </button>
           </div>
@@ -145,8 +152,8 @@ export function NewChat({
             autoFocus={mode !== "group"}
             placeholder={
               mode === "add"
-                ? "Exact username or phone number"
-                : "Search name or username"
+                ? "Username or phone number"
+                : "Name, username, or number"
             }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -504,7 +511,7 @@ export function Settings({
           {[
             {
               id: "profile",
-              label: "Your profile",
+              label: "Account",
               icon: (
                 <Avatar
                   name={user.display_name}
@@ -513,6 +520,8 @@ export function Settings({
                 />
               ),
             },
+            { id: "donate", label: "Donate to Signal", icon: <Heart size={19} /> },
+            { id: "general", label: "General", icon: <Settings2 size={19} /> },
             {
               id: "appearance",
               label: "Appearance",
@@ -523,12 +532,11 @@ export function Settings({
               label: "Notifications",
               icon: <Bell size={19} />,
             },
+            { id: "chats", label: "Chats", icon: <MessageCircle size={19} /> },
+            { id: "calls", label: "Calls", icon: <Phone size={19} /> },
             { id: "privacy", label: "Privacy", icon: <Shield size={19} /> },
-            {
-              id: "devices",
-              label: "Linked devices",
-              icon: <Monitor size={19} />,
-            },
+            { id: "data", label: "Data usage", icon: <Database size={19} /> },
+            { id: "backups", label: "Backups", icon: <HardDriveDownload size={19} /> },
           ].map((t) => (
             <button
               className={tab === t.id ? "selected" : ""}
@@ -598,6 +606,21 @@ export function Settings({
               </button>
             </>
           )}
+          {tab === "donate" && (
+            <>
+              <Heart size={42} className="muted" />
+              <h3>Donate to Signal</h3>
+              <p className="helper">Support private, open-source communication.</p>
+              <button className="secondary" onClick={() => notify("Donations are not connected in this demo.")}>Learn more</button>
+            </>
+          )}
+          {tab === "general" && (
+            <>
+              <h3>General</h3>
+              <p className="helper">Manage general application preferences.</p>
+              <p className="settings-note">This assignment demo keeps these options at their default values.</p>
+            </>
+          )}
           {tab === "appearance" && (
             <>
               <h3>Appearance</h3>
@@ -645,6 +668,20 @@ export function Settings({
               </label>
             </>
           )}
+          {tab === "chats" && (
+            <>
+              <h3>Chats</h3>
+              <p className="helper">Chat preferences and message behavior.</p>
+              <p className="settings-note">Read receipts, typing indicators, and disappearing messages are available in conversations.</p>
+            </>
+          )}
+          {tab === "calls" && (
+            <>
+              <Phone size={42} className="muted" />
+              <h3>Calls</h3>
+              <p className="helper">Voice and video calls are coming soon in this demo.</p>
+            </>
+          )}
           {tab === "privacy" && (
             <>
               <h3>Privacy</h3>
@@ -671,6 +708,20 @@ export function Settings({
                 Coming soon. You can already sign in on multiple browser
                 sessions to try messaging.
               </p>
+            </>
+          )}
+          {tab === "data" && (
+            <>
+              <h3>Data usage</h3>
+              <p className="helper">Control how messages and attachments use data.</p>
+              <p className="settings-note">Attachments are stored by the local demo service.</p>
+            </>
+          )}
+          {tab === "backups" && (
+            <>
+              <HardDriveDownload size={42} className="muted" />
+              <h3>Backups</h3>
+              <p className="helper">Backups are not enabled for this assignment demo.</p>
             </>
           )}
         </div>
