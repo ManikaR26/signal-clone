@@ -38,20 +38,38 @@ real-time messaging, typing indicators, delivery receipts, and read receipts.
 
 ## Screenshots
 
-### Messenger Interface
+<table>
+  <tr>
+    <td align="center">
+      <strong>Messenger Interface</strong><br><br>
+      <img src="docs/screenshots/interface.png" alt="Messenger interface" width="280">
+    </td>
+    <td align="center">
+      <strong>Real-Time Messaging</strong><br><br>
+      <img src="docs/screenshots/realtime-chat.png" alt="Real-time messaging" width="280">
+    </td>
+  </tr>
+</table>
 
-![Messenger interface](docs/screenshots/interface.png)
+<details>
+<summary>View additional screenshots</summary>
 
-### Real-Time Messaging
+<br>
 
-![Real-time messaging](docs/screenshots/realtime-chat.png)
-### Dark Mode and Settings
+<table>
+  <tr>
+    <td align="center">
+      <strong>Group Chat and Admin Controls</strong><br><br>
+      <img src="docs/screenshots/group-chat.png" alt="Group chat and admin controls" width="280">
+    </td>
+    <td align="center">
+      <strong>Dark Mode and Settings</strong><br><br>
+      <img src="docs/screenshots/dark-mode-settings.png" alt="Dark mode and settings" width="280">
+    </td>
+  </tr>
+</table>
 
-![Dark mode and settings](docs/screenshots/dark-mode-settings.png)
-
-### Group Chat and Admin Controls
-
-![Group chat and admin controls](docs/screenshots/group-chat.png)
+</details>
 
 
 
