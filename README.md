@@ -45,15 +45,15 @@ real-time messaging, typing indicators, delivery receipts, and read receipts.
 ### Real-Time Messaging
 
 ![Real-time messaging](docs/screenshots/realtime-chat.png)
+### Dark Mode and Settings
+
+![Dark mode and settings](docs/screenshots/dark-mode-settings.png)
 
 ### Group Chat and Admin Controls
 
 ![Group chat and admin controls](docs/screenshots/group-chat.png)
 
-### Dark Mode and Settings
 
-![Dark mode and settings](docs/screenshots/dark-mode-settings.png)
-## Evaluation demo flow
 
 1. Sign in as Alex with OTP `123456`.
 2. Open a second browser or incognito window and sign in as Maya.
