@@ -1,0 +1,15 @@
+services:
+  signal:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - signal-data:/app/data
+    environment:
+      DATA_DIR: /app/data
+      FRONTEND_DIST: /app/frontend/out
+      SEED_DEMO: "1"
+      DEMO_OTP: "123456"
+    restart: unless-stopped
+volumes:
+  signal-data:
