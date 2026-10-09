@@ -4,8 +4,8 @@ An original, full-stack Signal-inspired messaging platform built for the
 Scaler AI Labs SDE Fullstack Assignment.
 
 The project focuses on the core messaging experience: authentication,
-contacts, one-to-one and group conversations, persistent SQLite data, and
-real-time updates through authenticated WebSockets.
+contacts, one-to-one and group conversations, SQLite-backed messaging data,
+and real-time updates through authenticated WebSockets.
 
 > This is an assignment demonstration and is not the official Signal
 > application. OTP verification is mocked with 123456, messages are stored in
@@ -35,6 +35,49 @@ All seeded accounts use the fixed OTP **123456**.
 
 Use Alex in one browser window and Maya in an incognito window to demonstrate
 real-time messaging, typing indicators, delivery receipts, and read receipts.
+
+## Screenshots
+
+### Messenger interface
+
+![Messenger interface](screenshots/01-messenger-interface.png)
+
+### Real-time messaging
+
+![Real-time messaging](screenshots/02-realtime-messaging.png)
+
+### Group chat and admin controls
+
+![Group chat and admin controls](screenshots/03-group-chat.png)
+
+### Dark mode and settings
+
+![Dark mode and settings](screenshots/04-dark-mode.png)
+
+## Evaluation demo flow
+
+1. Sign in as Alex with OTP `123456`.
+2. Open a second browser or incognito window and sign in as Maya.
+3. Add each user as a contact and open their direct conversation.
+4. Send messages in both directions and observe typing and receipt states.
+5. Refresh the page and confirm that the message history remains available
+   during the active session.
+6. Create a group, add members, and send a group message.
+7. Open group details and test the admin-only add/remove member controls.
+8. Test reactions, replies, attachments, disappearing messages, and dark mode.
+9. Open Settings and inspect the appearance, privacy, notifications, and
+   placeholder sections.
+
+### Keyboard shortcuts
+
+| Shortcut | Action |
+| --- | --- |
+| Alt + N | Start a new conversation |
+| Ctrl/Cmd + K | Focus conversation search |
+| Ctrl/Cmd + Shift + F | Search loaded messages in the current chat |
+| Enter | Send a message |
+| Shift + Enter | Insert a new line |
+| Escape | Close a dialog or dismiss composer actions |
 
 ## Features
 
@@ -85,6 +128,36 @@ assignment:
 
 The frontend is exported as static files. FastAPI serves the frontend, REST
 API, WebSocket endpoint, and uploaded files from one origin.
+
+## Architecture
+
+~~~mermaid
+flowchart TD
+    UI["Next.js TypeScript UI"] -->|REST with bearer session| API["FastAPI routes"]
+    UI <-->|Authenticated WebSocket events| HUB["Connection hub"]
+    API -->|Transactions| DB[("SQLite")]
+    API -->|Events after commit| HUB
+    API --> FILES["Local uploaded files"]
+    EXPIRY["Expiry task"] --> DB
+    EXPIRY --> HUB
+~~~
+
+### Data flow
+
+1. The user signs in through the REST API using the fixed demo OTP.
+2. The backend creates a session and returns a bearer token.
+3. The frontend stores the session token locally so refreshes can restore the
+   account.
+4. REST endpoints create conversations, messages, memberships, receipts,
+   reactions, and attachments in SQLite.
+5. The WebSocket connection broadcasts committed events to the correct
+   conversation members.
+6. After reconnecting, the frontend reloads REST data; WebSockets are used for
+   live updates, not as the source of truth.
+
+The deployment uses one FastAPI worker because the current WebSocket hub is
+in-memory. A multi-worker production system would need shared pub/sub such as
+Redis.
 
 ## Run locally
 
@@ -156,59 +229,6 @@ docker compose up --build
 Open http://localhost:8000. The Compose configuration uses one worker and a
 named volume for local SQLite data and uploaded files.
 
-## Suggested demo flow
-
-1. Sign in as Alex with OTP 123456.
-2. Open a second browser or incognito window and sign in as Maya.
-3. Add each user as a contact and open their direct conversation.
-4. Send messages in both directions and observe typing and receipt states.
-5. Refresh the page and confirm the message history is still available.
-6. Create a group, add members, send a group message, and open group details.
-7. Test the admin-only add/remove member controls.
-8. Open Settings and inspect appearance, privacy, notifications, and
-   placeholder sections.
-
-### Keyboard shortcuts
-
-| Shortcut | Action |
-| --- | --- |
-| Alt + N | Start a new conversation |
-| Ctrl/Cmd + K | Focus conversation search |
-| Ctrl/Cmd + Shift + F | Search loaded messages in the current chat |
-| Enter | Send a message |
-| Shift + Enter | Insert a new line |
-| Escape | Close a dialog or dismiss composer actions |
-
-## Architecture
-
-~~~mermaid
-flowchart TD
-    UI["Next.js TypeScript UI"] -->|REST with bearer session| API["FastAPI routes"]
-    UI <-->|Authenticated WebSocket events| HUB["Connection hub"]
-    API -->|Transactions| DB[("SQLite")]
-    API -->|Events after commit| HUB
-    API --> FILES["Local uploaded files"]
-    EXPIRY["Expiry task"] --> DB
-    EXPIRY --> HUB
-~~~
-
-### Data flow
-
-1. The user signs in through the REST API using the fixed demo OTP.
-2. The backend creates a session and returns a bearer token.
-3. The frontend stores the session token locally so refreshes can restore the
-   account.
-4. REST endpoints create durable conversations, messages, memberships,
-   receipts, reactions, and attachments in SQLite.
-5. The WebSocket connection broadcasts committed events to the correct
-   conversation members.
-6. After reconnecting, the frontend reloads REST data; WebSockets are used for
-   live updates, not as the source of truth.
-
-The deployment uses one FastAPI worker because the current WebSocket hub is
-in-memory. A multi-worker production system would need shared pub/sub such as
-Redis.
-
 ## Repository structure
 
 ~~~text
@@ -236,6 +256,7 @@ signal-clone/
 │   ├── FINAL_AUDIT.md
 │   ├── QA_REPORT.md
 │   └── REQUIREMENTS.md
+├── screenshots/
 ├── Dockerfile
 ├── compose.yaml
 ├── render.yaml
