@@ -2,19 +2,19 @@ services:
   - type: web
     name: signal-clone
     runtime: docker
-    plan: starter
+    plan: free
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/health
+
     envVars:
       - key: DATA_DIR
-        value: /var/data/signal
+        value: /app/data
+
       - key: FRONTEND_DIST
         value: /app/frontend/out
+
       - key: SEED_DEMO
         value: "1"
+
       - key: DEMO_OTP
         value: "123456"
-    disk:
-      name: signal-data
-      mountPath: /var/data
-      sizeGB: 1
