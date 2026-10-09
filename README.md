@@ -14,7 +14,7 @@ The project focuses on authentication, contacts, one-to-one and group conversati
 
 The free Render service may take a few seconds to wake after inactivity.
 
-## Demo accounts
+## Mocked accounts
 
 All seeded accounts use the fixed OTP **123456**.
 
