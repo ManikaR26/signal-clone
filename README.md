@@ -1,229 +1,399 @@
+# Signal Clone
 
-# Signal Clone — Full-stack messaging
+An original, full-stack Signal-inspired messaging platform built for the
+Scaler AI Labs SDE Fullstack Assignment.
 
-An original implementation of the Signal messaging experience for the Scaler AI Labs SDE assignment. Next.js and TypeScript on the frontend; FastAPI, SQLite and authenticated WebSockets on the backend.
+The project focuses on the core messaging experience: authentication,
+contacts, one-to-one and group conversations, persistent SQLite data, and
+real-time updates through authenticated WebSockets.
 
-> Assignment demo, not the official Signal app. OTP verification is mocked with `123456`. There is no end-to-end encryption. Messages are stored in plaintext. Do not use this application for sensitive conversations.
+> This is an assignment demonstration and is not the official Signal
+> application. OTP verification is mocked with 123456, messages are stored in
+> plaintext, and real end-to-end encryption is not implemented. Do not use it
+> for sensitive conversations.
+
+## Links
+
+- **Live demo:** https://signal-clone-g5ln.onrender.com
+- **GitHub repository:** https://github.com/ManikaR26/signal-clone
+- **API documentation:** https://signal-clone-g5ln.onrender.com/docs
+
+The free Render service may take a few seconds to wake after inactivity.
+
+## Demo accounts
+
+All seeded accounts use the fixed OTP **123456**.
+
+| Username | Display name |
+| --- | --- |
+| alex | Alex Morgan |
+| maya | Maya Chen |
+| jordan | Jordan Lee |
+| sam | Sam Rivera |
+| priya | Priya Shah |
+| leo | Leo Martin |
+
+Use Alex in one browser window and Maya in an incognito window to demonstrate
+real-time messaging, typing indicators, delivery receipts, and read receipts.
 
 ## Features
 
-- Username or phone-number registration, profile name/avatar, revocable seven-day sessions, logout.
-- Contacts, conversation/contact search, all/unread/group filters, recent-activity sorting and unread counts.
-- Real-time direct and group messages; typing, timestamps and sending/sent/delivered/read states.
-- Persistent group memberships; server-enforced admin-only membership controls.
-- Reconnection with exponential backoff, offline history resynchronization and idempotent message retries.
-- Signal-inspired desktop navigation, chat bubbles, profile/settings dialogs and mobile layout.
-- Image/file attachments, emoji reactions, quoted replies, disappearing messages, light/dark/system themes, keyboard shortcuts.
-- Calls, stories, linked devices and advanced privacy options have explicit placeholders.
-- Six fictional users, seven conversations and seeded message histories.
+### Required functionality
 
-## Quick start
+- Username or phone-number registration with mock OTP verification
+- Login, logout, profile display name, avatar, and persistent sessions
+- Contact search, conversation search, filters, recent sorting, unread counts,
+  last-message previews, and presence information
+- Real-time one-to-one text messaging with timestamps and message persistence
+- Sending, sent, delivered, read, and failed message states
+- Typing indicators, reconnection, offline recovery, and idempotent retries
+- Group creation, member management, group messaging, and admin permissions
+- SQLite relational schema with foreign keys, indexes, and transactional writes
+- Signal-inspired conversation list, chat pane, message bubbles, dialogs,
+  toasts, loading states, error states, and responsive layout
+- Settings sections for privacy, notifications, appearance, and linked devices
 
-Requirements: Python 3.12+, Node.js 22 LTS+, npm. From the project root:
+### Additional implemented features
 
-```bash
+- Emoji reactions
+- Reply-to messages with quoted previews
+- Image and file attachments with authorized downloads
+- Disappearing-message timers
+- Light, dark, and system appearance modes
+- Keyboard shortcuts
+
+### Explicit placeholders
+
+The following are represented honestly as placeholders, as allowed by the
+assignment:
+
+- Voice and video calls
+- Stories
+- Linked-device synchronization
+- Actual end-to-end encryption and cryptographic key exchange
+
+## Technology stack
+
+| Layer | Technology |
+| --- | --- |
+| Frontend | Next.js, React, TypeScript, CSS |
+| Backend | Python, FastAPI, Uvicorn |
+| Database | SQLite using Python's sqlite3 module |
+| Real-time communication | Authenticated WebSockets |
+| Icons | Lucide React |
+| Deployment | Docker on Render |
+
+The frontend is exported as static files. FastAPI serves the frontend, REST
+API, WebSocket endpoint, and uploaded files from one origin.
+
+## Run locally
+
+### Requirements
+
+- Python 3.12 or newer
+- Node.js 22 LTS or newer
+- npm
+- Docker is optional
+
+### Windows PowerShell
+
+Run these commands from the project root:
+
+~~~powershell
 cd frontend
 npm ci
 npm run build
+
+cd ..\backend
+py -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+~~~
+
+Open http://localhost:8000.
+
+If PowerShell blocks activation, the commands above intentionally use the
+virtual environment's Python executable directly, so activation is not
+required.
+
+### macOS or Linux
+
+~~~bash
+cd frontend
+npm ci
+npm run build
+
 cd ../backend
-python -m venv .venv
-# macOS/Linux:
+python3 -m venv .venv
 source .venv/bin/activate
-# Windows PowerShell instead: .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
-```
+~~~
 
-Open **http://localhost:8000**. The database and demo data are created automatically on first startup. Subsequent starts preserve data. The downloadable ZIP also includes an already-built frontend export.
+Open http://localhost:8000. On first startup, SQLite tables and fictional
+demo data are created automatically.
 
-If PowerShell blocks virtual-environment activation, use `.venv\Scripts\python.exe` instead of `python` without changing execution policy. See [START_HERE.md](START_HERE.md).
+### Frontend development mode
 
-For frontend development, keep the API running and use a second terminal:
+Keep the FastAPI server running and use a second terminal:
 
-```bash
+~~~bash
 cd frontend
+npm ci
 npm run dev
-```
+~~~
 
-Open http://localhost:3000. Development defaults to API port 8000. Production uses the same origin unless `NEXT_PUBLIC_API_URL` is set **at build time**.
+Open http://localhost:3000. The development frontend communicates with the
+backend on port 8000. After changing the frontend, run npm run build before
+using the single-origin production-style URL on port 8000.
 
-### Docker alternative
+### Docker
 
-```bash
+~~~bash
 docker compose up --build
-```
+~~~
 
-Open http://localhost:8000. A named volume preserves the database and uploaded files. This uses a single backend worker, required by the in-memory WebSocket hub. Docker configuration is supplied; the image must be built and verified on the deployment host.
+Open http://localhost:8000. The Compose configuration uses one worker and a
+named volume for local SQLite data and uploaded files.
 
-## Try the app
+## Suggested demo flow
 
-Sign in with the **Alex**, **Maya** or **Jordan** demo button. The other seeded usernames are `sam`, `priya`, `leo`; all use OTP `123456`. Register a new username with any display name, or a phone number without spaces.
+1. Sign in as Alex with OTP 123456.
+2. Open a second browser or incognito window and sign in as Maya.
+3. Add each user as a contact and open their direct conversation.
+4. Send messages in both directions and observe typing and receipt states.
+5. Refresh the page and confirm the message history is still available.
+6. Create a group, add members, send a group message, and open group details.
+7. Test the admin-only add/remove member controls.
+8. Open Settings and inspect appearance, privacy, notifications, and
+   placeholder sections.
 
-Use Alex in a normal browser and Maya in a private window so they have independent sessions. Add contacts, open a conversation and send messages. Create a group from **New message → New group**. Open a chat's header to see members and its disappearing-message timer.
-
-Keyboard shortcuts:
+### Keyboard shortcuts
 
 | Shortcut | Action |
 | --- | --- |
-| Ctrl/Cmd + Shift + N | New conversation |
+| Alt + N or Ctrl/Cmd + Alt + N | Start a new conversation |
 | Ctrl/Cmd + K | Focus conversation search |
 | Ctrl/Cmd + Shift + F | Search loaded messages in the current chat |
-| Enter / Shift + Enter | Send / new line |
-| Escape | Close a dialog or dismiss composer actions; return to list when no dialog is open |
+| Enter | Send a message |
+| Shift + Enter | Insert a new line |
+| Escape | Close a dialog or dismiss composer actions |
 
 ## Architecture
 
-```mermaid
+~~~mermaid
 flowchart TD
-    UI[Next.js TypeScript interface] -->|REST with bearer session| API[FastAPI routes]
-    UI <-->|Authenticated WebSocket events| Hub[Connection hub]
-    API -->|Transactions| DB[(SQLite)]
-    API -->|Events after commit| Hub
-    API --> Files[Persistent uploaded files]
-    Expiry[Expiry task] --> DB
-    Expiry --> Hub
-```
+    UI["Next.js TypeScript UI"] -->|REST with bearer session| API["FastAPI routes"]
+    UI <-->|Authenticated WebSocket events| HUB["Connection hub"]
+    API -->|Transactions| DB[("SQLite")]
+    API -->|Events after commit| HUB
+    API --> FILES["Local uploaded files"]
+    EXPIRY["Expiry task"] --> DB
+    EXPIRY --> HUB
+~~~
 
-Next.js is exported as static assets because this app does not need server-side rendering or Next.js API routes. FastAPI serves those assets, REST endpoints and `/ws` on one origin. This avoids cross-origin production configuration and preserves the exact required frontend/backend stack. SQLite and uploads live on a persistent disk.
+### Data flow
 
-REST creates durable state. WebSockets distribute change events and typing/presence. After reconnection, REST reloads current data; WebSockets are not used as the source of truth.
+1. The user signs in through the REST API using the fixed demo OTP.
+2. The backend creates a session and returns a bearer token.
+3. The frontend stores the session token locally so refreshes can restore the
+   account.
+4. REST endpoints create durable conversations, messages, memberships,
+   receipts, reactions, and attachments in SQLite.
+5. The WebSocket connection broadcasts committed events to the correct
+   conversation members.
+6. After reconnecting, the frontend reloads REST data; WebSockets are used for
+   live updates, not as the source of truth.
 
-### Source map
+The deployment uses one FastAPI worker because the current WebSocket hub is
+in-memory. A multi-worker production system would need shared pub/sub such as
+Redis.
 
-```text
-frontend/
-  app/                 Next.js entry, layout and responsive CSS
-  components/
-    Auth.tsx           Mock verification and registration
-    Messenger.tsx      Navigation, lists, search and modal coordination
-    ChatPane.tsx       Messages, composer, attachment rendering and actions
-    Dialogs.tsx        Contacts, groups, profile and settings
-    ui.tsx             Shared avatar, buttons and accessible modal
-  lib/
-    api.ts             Authenticated HTTP requests and file downloads
-    types.ts           Shared TypeScript domain types
-    useMessenger.ts    Messaging state, sockets, reconnects and receipts
-backend/
-  app/
-    main.py            Startup, WebSocket authentication, expiry and static hosting
-    routes.py          REST routes and access checks
-    db.py              SQLite schema and transactional connection helper
-    models.py          Request validation
-    security.py        Hashed session tokens and membership/role checks
-    service.py         Conversation/message response serialization
-    realtime.py        User-to-WebSocket connection hub
-    seed.py            Idempotent fictional demo data
-  tests/               Integration tests
-```
+## Repository structure
 
-## Database schema
+~~~text
+signal-clone/
+├── backend/
+│   ├── app/
+│   │   ├── main.py          Startup, static hosting, expiry task, WebSockets
+│   │   ├── routes.py        REST endpoints and access checks
+│   │   ├── db.py            SQLite schema and connection helper
+│   │   ├── models.py        Request validation models
+│   │   ├── security.py      Session and membership checks
+│   │   ├── service.py       Response and message serialization
+│   │   ├── realtime.py      WebSocket connection hub
+│   │   └── seed.py          Idempotent demo data
+│   ├── tests/               Backend integration and WebSocket tests
+│   ├── requirements.txt
+│   └── requirements-dev.txt
+├── frontend/
+│   ├── app/                 Next.js entry points and global CSS
+│   ├── components/          Auth, messenger, chat, dialogs, and shared UI
+│   └── lib/                 API client, types, and messaging state
+├── docs/
+│   ├── DATABASE_SCHEMA.md
+│   ├── DEPLOYMENT.md
+│   ├── FINAL_AUDIT.md
+│   ├── QA_REPORT.md
+│   └── REQUIREMENTS.md
+├── Dockerfile
+├── compose.yaml
+├── render.yaml
+└── README.md
+~~~
 
-All tables use real foreign keys. `PRAGMA foreign_keys=ON` runs for every connection; WAL mode and a busy timeout support short concurrent operations. Indexes cover chat history, membership lookup, user receipts and expiry.
+## Database design
 
-| Table | Key | Purpose / relationships |
+The backend uses related SQLite tables instead of storing an entire
+conversation as one JSON object.
+
+| Table | Purpose |
+| --- | --- |
+| users | Accounts, display names, avatars, and presence timestamps |
+| sessions | Hashed session tokens, expiry, and revocation |
+| contacts | Directed user-to-user contact relationships |
+| conversations | Direct or group conversation metadata |
+| conversation_members | Many-to-many membership with admin/member roles |
+| messages | Text, timestamps, sender, reply, attachment, and expiry data |
+| message_receipts | Per-recipient delivered/read state |
+| attachments | Authorized file metadata and storage paths |
+| reactions | One reaction per user per message |
+
+Foreign keys, unique constraints, indexes, and transactions protect the
+relationships. A unique sender/client-message ID makes message retries
+idempotent.
+
+See [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) for the entity-
+relationship diagram and design rationale.
+
+## API and WebSocket overview
+
+Interactive API documentation is available at /docs and the OpenAPI schema is
+available at /openapi.json.
+
+| Method | Endpoint | Purpose |
 | --- | --- | --- |
-| `users` | `id` | Unique case-insensitive username, display name, avatar, last-seen time |
-| `sessions` | `token_hash` | Many sessions → one user; expiry and server-side revocation |
-| `contacts` | `(owner_id, contact_id)` | Directed user → user relationship; cannot add oneself |
-| `conversations` | `id` | Direct/group type, name, creator, timer; unique sorted-pair `direct_key` prevents duplicate direct chats |
-| `conversation_members` | `(conversation_id, user_id)` | Many-to-many membership with `admin` or `member` role |
-| `messages` | `id` | Conversation, sender, text, timestamp, optional quote/attachment/expiry |
-| `message_receipts` | `(message_id, user_id)` | One delivery/read state per recipient at send time |
-| `attachments` | `id` | Random file ID, owner, original name, type, size and private disk path |
-| `reactions` | `(message_id, user_id)` | One emoji reaction per user per message |
+| GET | /api/health | Health check |
+| POST | /api/auth/login | Register or log in with mock OTP |
+| GET | /api/auth/me | Restore the current session |
+| POST | /api/auth/logout | Revoke the current session |
+| PATCH | /api/profile | Update display name or avatar |
+| GET | /api/users?q=... | Search registered users |
+| GET / POST | /api/contacts | List or add contacts |
+| GET / POST | /api/conversations | List or create conversations |
+| GET / POST | /api/conversations/{id}/messages | Load or send messages |
+| POST | /api/conversations/{id}/members | Add a group member |
+| DELETE | /api/conversations/{id}/members/{user_id} | Remove a group member |
+| POST | /api/receipts | Acknowledge delivery or reading |
+| POST | /api/messages/{id}/reaction | Add or remove a reaction |
+| POST | /api/attachments | Upload an attachment |
+| GET | /api/attachments/{id} | Download an authorized attachment |
 
-`UNIQUE(sender_id, client_id)` makes retries idempotent. Self-referencing `messages.reply_to` uses `ON DELETE SET NULL` so expiry does not break replies. Messages, reactions and receipts use cascade cleanup where appropriate. A group member added later can view retained history; receipts are only created for people present when each message was sent.
+The WebSocket endpoint is /ws. The client authenticates in the first frame
+with a session token. Events include connected, message, receipts, refresh,
+typing, presence, expired, pong, and error.
 
-See [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) for the entity-relationship diagram and the database design rationale.
+### Message lifecycle
 
-## API overview
-
-Interactive documentation: **/docs**. OpenAPI schema: **/openapi.json**. Protected endpoints require `Authorization: Bearer <token>`.
-
-| Method | Path | Purpose |
-| --- | --- | --- |
-| GET | `/api/health`, `/api/demo-users` | Health and fictional demo identities |
-| POST | `/api/auth/login` | Verify mocked OTP; register or create a session |
-| GET / POST | `/api/auth/me`, `/api/auth/logout` | Restore / revoke session |
-| PATCH | `/api/profile` | Update display name and avatar |
-| GET | `/api/users?q=…` | Find registered people |
-| GET / POST | `/api/contacts` | List / add contacts |
-| GET / POST | `/api/conversations` | List / create chats |
-| POST | `/api/conversations/{id}/members` | Admin adds a member |
-| DELETE | `/api/conversations/{id}/members/{user_id}` | Admin removes a member |
-| PATCH | `/api/conversations/{id}/timer` | Set expiry for future messages |
-| GET / POST | `/api/conversations/{id}/messages` | Paginated history / send a message |
-| GET | `/api/pending-deliveries` | Resynchronize undelivered messages |
-| POST | `/api/receipts` | Acknowledge delivery / reading |
-| POST | `/api/messages/{id}/reaction` | Toggle or replace your reaction |
-| POST / GET | `/api/attachments`, `/api/attachments/{id}` | Upload / authorized download |
-
-### WebSocket protocol
-
-Connect to `/ws`, then send `{"type":"auth","token":"…"}` as the first frame within ten seconds. Tokens never appear in the URL. Server events: `connected`, `message`, `receipts`, `refresh`, `typing`, `presence`, `expired`, `pong`, `error`. Client events after authentication: `typing` with conversation ID and active boolean; `ping` as a heartbeat. Membership is checked before relaying typing. Revoking a session closes its sockets.
-
-### Message status semantics
-
-- **Sending:** optimistic local message while the HTTP request is in flight.
-- **Sent:** the database transaction committed.
-- **Delivered:** every intended recipient's client acknowledged receiving it.
-- **Read:** every intended recipient viewed the chat in a visible browser tab.
-- **Failed:** request failed; the Retry button reuses the client ID so a previously committed request is not duplicated.
-
-A background tab can acknowledge delivery but does not mark messages read. Group receipts aggregate across recipients recorded at send time. A removed member's historical receipts remain an accurate record and can keep an older message from reaching all-read status.
+- **Sending:** optimistic frontend state while the request is in progress.
+- **Sent:** the database transaction has committed.
+- **Delivered:** intended recipients acknowledged receiving the message.
+- **Read:** recipients viewed the conversation in an active browser tab.
+- **Failed:** the request failed and can be retried with the same client ID.
 
 ## Verification
 
-```bash
+Run backend tests:
+
+~~~bash
 cd backend
 python -m pip install -r requirements-dev.txt
 python -m pytest -q
-cd ../frontend
+~~~
+
+Run frontend checks:
+
+~~~bash
+cd frontend
 npm ci
 npm run typecheck
 npm run build
-```
+~~~
 
-Tests cover mocked auth, persistent accounts, logout, contact creation, direct-chat deduplication, idempotent sends, receipt transitions, pagination, group permissions, unauthorized access, quotes, reactions, expiry, private attachments and actual WebSocket message/typing/receipt events.
+The test suite covers authentication, persistence, logout, contacts,
+conversation creation, idempotent sends, receipts, pagination, group
+permissions, unauthorized access, replies, reactions, expiry, attachments,
+typing events, and WebSocket message delivery.
 
-The final requirement-by-requirement audit is in [`docs/FINAL_AUDIT.md`](docs/FINAL_AUDIT.md). It separates locally tested functionality from browser, Docker-host and public-deployment checks that still require the candidate's environment.
+The requirement mapping and QA details are available in:
 
-See [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md) for requirement mapping and [docs/QA_REPORT.md](docs/QA_REPORT.md) for the executed verification report. See [docs/EXPLAIN_THE_CODE.md](docs/EXPLAIN_THE_CODE.md) before the evaluation interview.
+- [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md)
+- [docs/QA_REPORT.md](docs/QA_REPORT.md)
+- [docs/FINAL_AUDIT.md](docs/FINAL_AUDIT.md)
+
+## Deployment
+
+The application is deployed as one Docker web service:
+
+- Next.js is built into static files during the Docker build.
+- FastAPI serves the frontend and backend from one origin.
+- WebSockets use the same HTTPS host.
+- Render starts one Uvicorn worker.
+- Demo data is seeded with SEED_DEMO=1.
+
+The current demo uses Render's free plan and does not use a paid persistent
+disk. Therefore, custom SQLite records and uploaded files may reset when the
+service is restarted or redeployed. The fictional demo accounts and seed data
+are recreated automatically.
+
+Deployment environment:
+
+| Variable | Value |
+| --- | --- |
+| DATA_DIR | /app/data |
+| FRONTEND_DIST | /app/frontend/out |
+| SEED_DEMO | 1 |
+| DEMO_OTP | 123456 |
+| NEXT_PUBLIC_API_URL | Unset for same-origin deployment |
+
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for the deployment workflow and
+troubleshooting notes.
 
 ## Assumptions and limitations
 
-- This is an assignment demo. Fixed OTP means anyone can impersonate an account; no real identity verification, E2EE, key exchange or spam protection is claimed.
-- Bearer tokens are stored in localStorage for browser persistence; only SHA-256 token hashes are stored server-side. A production application should use hardened identity verification, session storage and abuse controls.
-- One FastAPI worker/process only. A production multi-worker deployment needs shared pub/sub (for example Redis) and a database strategy for multiple instances.
-- Group creator remains the sole admin. Admin transfer, leaving/deleting groups and blocking are outside the required scope.
-- Disappearing-message timers start at **send time**, intentionally simpler than Signal's actual semantics; the UI and docs state this. Expired text is hidden immediately on fetch and deleted by a two-second task. Files already downloaded cannot be recalled; uploaded blobs are not securely erased on message expiry.
-- User avatars are resized locally to 192×192. Attachment uploads are limited to 10 MB; dangerous file types are downloaded rather than rendered as HTML.
-- In-chat search covers currently loaded messages; load older messages to expand the search. Contact search is limited to 100 results.
-- Calls, stories, linked devices and advanced privacy settings are placeholders, as permitted. UI is an original Signal-inspired recreation, not a claim of pixel-perfect parity with every Signal version.
-- Docker deployment and public GitHub publication require your hosting/GitHub account. Do not submit a localhost address.
+- OTP verification is intentionally fixed and mocked. Anyone who knows the
+  OTP can sign in as a demo account.
+- Messages are stored in plaintext. No real identity verification, key
+  exchange, end-to-end encryption, or spam protection is claimed.
+- Session tokens are persisted in browser localStorage for this assignment.
+  Only token hashes are stored by the backend.
+- The group creator remains the only administrator. Admin transfer, blocking,
+  leaving groups, and group deletion are outside the assignment scope.
+- Disappearing-message timers start at send time. This is a simplified demo
+  behavior and is not Signal's exact implementation.
+- In-chat search covers currently loaded messages. Older messages must be
+  loaded before they can be found.
+- Calls, stories, linked devices, and advanced privacy features are
+  placeholders.
+- The UI is an original Signal-inspired recreation, not a claim of
+  pixel-perfect parity with every Signal release.
 
-## Deploy and submit
+## Submission checklist
 
-Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). The supplied Dockerfile serves the full app from one URL. `render.yaml` provisions a web service and persistent disk; it specifies a paid plan, so review provider costs before creating it. No paid resources have been provisioned by this project.
+- [x] Public GitHub repository
+- [x] Hosted HTTPS demo
+- [x] Frontend and backend included in the same repository
+- [x] README with setup, architecture, schema, API overview, and limitations
+- [x] Seed data and demo credentials documented
+- [ ] Complete two-browser live workflow test before submission
+- [ ] Submit both URLs through the assignment form
 
-After creating an empty public GitHub repository in your account:
+## Originality and attribution
 
-```bash
-git init
-git add .
-git commit -m "Build Signal-style full-stack messaging application"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPOSITORY.git
-git push -u origin main
-```
+This project was implemented from the assignment requirements and does not
+copy an existing Signal-clone repository. The UI and demo data are original.
+Icons are provided by Lucide React. Signal and its branding belong to their
+respective owners.
 
-Commit the npm lockfile. Do not commit local databases, sessions, uploaded private files, `.env`, virtual environments or dependency folders. Submit the public repository URL and the working deployed URL.
-
-## Design references and originality
-
-Visual references only: [Signal message UI](https://signal.org/blog/message-requests/), [Signal desktop navigation](https://signal.org/blog/call-links/), [Signal appearance settings](https://support.signal.org/hc/en-us/articles/360007320951-Chat-Colors-Wallpaper-and-Themes). Framework references: [FastAPI WebSockets](https://fastapi.tiangolo.com/advanced/websockets/), [Next.js output](https://nextjs.org/docs/app/api-reference/config/next-config-js/output).
-
-No existing Signal-clone repository was copied. Icons are from Lucide; the rest of the implementation and demo content were authored for this assignment with AI assistance. Signal and its branding belong to their respective owners. Understand, review and personalize the code before presenting it as your submission.
-
-# signal-clone
-76238172303c3adf513a1a74dafc7aa43490114f
+AI tools were used as development assistance. The implementation should be
+reviewed and understood before being presented during evaluation.
