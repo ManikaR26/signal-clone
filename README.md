@@ -34,41 +34,30 @@ All seeded accounts use the fixed OTP **123456**.
 
 Use Alex in one browser window and Maya in an incognito window to demonstrate
 real-time messaging, typing indicators, delivery receipts, and read receipts.
-
 ## Screenshots
 
 <table>
   <tr>
-    <td align="center">
+    <td align="center" width="50%">
       <strong>Messenger Interface</strong><br><br>
-      <img src="docs/screenshots/interface.png" alt="Messenger interface" width="280">
+      <img src="docs/screenshots/interface.png" alt="Messenger interface" width="300" height="190">
     </td>
-    <td align="center">
+    <td align="center" width="50%">
       <strong>Real-Time Messaging</strong><br><br>
-      <img src="docs/screenshots/realtime-chat.png" alt="Real-time messaging" width="280">
+      <img src="docs/screenshots/realtime-chat.png" alt="Real-time messaging" width="300" height="190">
     </td>
   </tr>
-</table>
-
-<details>
-<summary>View additional screenshots</summary>
-
-<br>
-
-<table>
   <tr>
-    <td align="center">
+    <td align="center" width="50%">
       <strong>Group Chat and Admin Controls</strong><br><br>
-      <img src="docs/screenshots/group-chat.png" alt="Group chat and admin controls" width="280">
+      <img src="docs/screenshots/group-chat.png" alt="Group chat and admin controls" width="300" height="190">
     </td>
-    <td align="center">
+    <td align="center" width="50%">
       <strong>Dark Mode and Settings</strong><br><br>
-      <img src="docs/screenshots/dark-mode-settings.png" alt="Dark mode and settings" width="280">
+      <img src="docs/screenshots/dark-mode-settings.png" alt="Dark mode and settings" width="300" height="190">
     </td>
   </tr>
 </table>
-
-</details>
 
 
 
