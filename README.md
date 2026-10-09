@@ -172,7 +172,7 @@ named volume for local SQLite data and uploaded files.
 
 | Shortcut | Action |
 | --- | --- |
-| Alt + N or Ctrl/Cmd + Alt + N | Start a new conversation |
+| Alt + N | Start a new conversation |
 | Ctrl/Cmd + K | Focus conversation search |
 | Ctrl/Cmd + Shift + F | Search loaded messages in the current chat |
 | Enter | Send a message |
