@@ -1,6 +1,6 @@
 # Signal Clone
 
-An original, full-stack Signal-inspired messaging platform built for the Scaler AI Labs SDE Fullstack Assignment.
+An original, full-stack Signal-inspired messaging platform.
 
 The project focuses on authentication, contacts, one-to-one and group conversations, persistent SQLite data, and real-time updates through authenticated WebSockets.
 
